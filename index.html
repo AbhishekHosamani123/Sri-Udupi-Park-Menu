@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#5e1212">
+<meta name="description" content="Sri Udupi Park Veg Family Restaurant — digital menu. Scan, browse and order. No app needed.">
+<title>Sri Udupi Park — Menu | Veg Family Restaurant</title>
+<style>
+  :root{
+    --maroon:#5e1212;
+    --maroon-dark:#451010;
+    --maroon-mid:#7c1d1d;
+    --red:#a42222;
+    --cream:#fdf7ee;
+    --card:#ffffff;
+    --ink:#2b1a12;
+    --muted:#7a6a5f;
+    --line:#eadfcd;
+    --green:#0e7a3a;
+    --gold:#e8b23a;
+    --radius:14px;
+    --header-h:52px;
+    --chips-h:0px; /* set by JS for scroll-padding */
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-padding-top:calc(var(--header-h) + 8px); -webkit-text-size-adjust:100%; }
+  html, body{ overflow-x:clip; }
+  body{
+    font-family:"Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.45;
+    font-size:16px;
+  }
+  /* ------- Header (compact, sticky, never covers content thanks to scroll-padding) ------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--maroon);
+    color:#fff;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+  }
+  .head-inner{
+    max-width:1000px; margin:0 auto;
+    min-height:var(--header-h);
+    display:flex; align-items:center; gap:10px;
+    padding:8px 14px;
+  }
+  .brand{ min-width:0; }
+  .brand .kn{
+    display:block; font-size:.66rem; letter-spacing:.04em; color:var(--gold); font-weight:600;
+  }
+  .brand .en{
+    display:block; font-size:1.02rem; font-weight:700; letter-spacing:.02em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .veg-badge{
+    margin-left:auto; flex-shrink:0;
+    display:flex; align-items:center; gap:6px;
+    border:2px solid var(--green); color:#c9f3d6;
+    font-size:.72rem; font-weight:700; letter-spacing:.05em;
+    padding:5px 9px; border-radius:8px; min-height:32px;
+  }
+  .veg-badge i{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--green); flex-shrink:0;
+  }
+  /* ------- Hero (short so the menu is visible with minimal scroll) ------- */
+  .hero{
+    background:
+      radial-gradient(120% 140% at 85% -20%, rgba(232,178,58,.16), transparent 55%),
+      linear-gradient(180deg, var(--maroon-dark), #6d1818);
+    color:#fff;
+    text-align:center;
+    padding:16px 16px 18px;
+  }
+  .hero h1{
+    font-size:1.35rem; line-height:1.2; letter-spacing:.01em;
+  }
+  .hero .tag{
+    margin-top:5px; font-size:.86rem; color:#f3d9a8; font-weight:600;
+  }
+  .hero .pills{
+    margin-top:11px; display:flex; flex-wrap:wrap; justify-content:center; gap:7px;
+  }
+  .pill{
+    font-size:.74rem; font-weight:600;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    padding:5px 11px; border-radius:999px;
+    white-space:nowrap;
+  }
+  /* ------- Category chips: horizontally scrollable on small screens ------- */
+  .chips-bar{
+    position:sticky; top:var(--header-h); z-index:40;
+    background:var(--cream);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 2px 5px rgba(46,17,17,.06);
+  }
+  .chips{
+    max-width:1000px; margin:0 auto;
+    display:flex; gap:8px;
+    padding:9px 14px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .chips::-webkit-scrollbar{ display:none; }
+  .chip{
+    flex:0 0 auto;
+    min-height:44px;             /* comfortable tap size */
+    padding:0 16px;
+    display:inline-flex; align-items:center;
+    border:1.5px solid var(--maroon-mid);
+    border-radius:999px;
+    background:#fff; color:var(--maroon-mid);
+    font-size:.86rem; font-weight:700;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  .chip[aria-pressed="true"]{
+    background:var(--maroon-mid); color:#fff;
+  }
+  .chip:focus-visible, button:focus-visible, input:focus-visible, .top-btn:focus-visible{
+    outline:3px solid var(--gold); outline-offset:2px;
+  }
+  /* ------- Search ------- */
+  .search-wrap{
+    max-width:1000px; margin:0 auto;
+    padding:12px 14px 4px;
+  }
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    background:#fff; border:1.5px solid var(--line);
+    border-radius:12px; padding:2px 4px 2px 12px;
+    max-width:560px;
+  }
+  .search-box svg{ flex-shrink:0; color:var(--muted); }
+  .search-box input{
+    flex:1; min-width:0;
+    border:0; background:transparent;
+    font-size:16px;                 /* prevents iOS zoom-on-focus */
+    padding:10px 0; min-height:44px;
+    color:var(--ink);
+  }
+  .search-box input:focus{ outline:none; }
+  .clear-btn{
+    flex-shrink:0;
+    width:44px; height:44px;
+    border:0; background:transparent; color:var(--muted);
+    font-size:1.25rem; cursor:pointer; border-radius:10px;
+    display:none;
+  }
+  .clear-btn.show{ display:inline-flex; align-items:center; justify-content:center; }
+  /* ------- Menu ------- */
+  main{ max-width:1000px; margin:0 auto; padding:6px 12px 70px; }
+  .menu-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+  section.card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 14px 8px;
+    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 8px);
+  }
+  .sec-head{ display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-bottom:10px; }
+  .sec-head h2{
+    font-size:1.02rem; font-weight:800; color:var(--maroon-mid);
+    display:flex; align-items:center; gap:8px;
+  }
+  .sec-head h2 i{
+    width:12px; height:12px; flex-shrink:0;
+    background:#fff; border:2px solid var(--green); border-radius:3px; position:relative;
+  }
+  .sec-head h2 i::after{
+    content:""; position:absolute; inset:2px; border-radius:50%;
+    background:var(--green);
+  }
+  .sec-time{
+    font-size:.74rem; font-weight:600; color:var(--muted);
+    background:var(--cream); border:1px solid var(--line);
+    padding:3px 9px; border-radius:999px; white-space:nowrap;
+  }
+  ul.items{ list-style:none; }
+  ul.items li{
+    display:flex; align-items:baseline; gap:12px;
+    padding:9px 2px;
+    border-bottom:1px dashed var(--line);
+  }
+  ul.items li:last-child{ border-bottom:0; }
+  .i-name{ flex:1; min-width:0; overflow-wrap:break-word; }   /* long names wrap, never overlap price */
+  .i-price{
+    flex-shrink:0; text-align:right;
+    font-weight:800; color:var(--red);
+    font-size:.98rem;
+    font-variant-numeric:tabular-nums;   /* prices in a tidy column */
+    white-space:nowrap;
+  }
+  /* ------- Promo strip ------- */
+  .promo{
+    background:linear-gradient(135deg, var(--maroon-mid), #96302f);
+    color:#fff; border-radius:var(--radius);
+    padding:14px 16px; margin:2px 0 12px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .promo .p-title{ font-weight:800; font-size:1rem; }
+  .promo .p-sub{ font-size:.8rem; color:#f3d9a8; }
+  .promo .p-price{
+    margin-left:auto; text-align:right; flex-shrink:0;
+  }
+  .promo .p-price b{ font-size:1.25rem; font-variant-numeric:tabular-nums; }
+  .promo .p-price span{ display:block; font-size:.68rem; color:#f3d9a8; }
+  /* ------- Footer ------- */
+  footer{
+    background:var(--maroon-dark); color:#e9d9c4;
+    text-align:center; padding:22px 16px 88px;   /* bottom room so back-to-top never covers text */
+    font-size:.84rem; line-height:1.6;
+  }
+  footer b{ color:#fff; }
+  /* ------- Back to top ------- */
+  .top-btn{
+    position:fixed; right:14px; bottom:16px; z-index:60;
+    width:48px; height:48px; min-width:44px; min-height:44px;
+    border-radius:50%;
+    border:0; cursor:pointer;
+    background:var(--maroon-mid); color:#fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
+    display:none;
+    touch-action:manipulation;
+  }
+  .top-btn.show{ display:flex; align-items:center; justify-content:center; }
+  .no-results{
+    display:none; text-align:center; padding:26px 10px; color:var(--muted); font-size:.95rem;
+  }
+  .no-results.show{ display:block; }
+  .hidden{ display:none !important; }
+
+  /* ====================== LARGER SCREENS ====================== */
+  @media (min-width:600px){
+    .hero h1{ font-size:1.7rem; }
+    .hero{ padding:20px 16px 22px; }
+    .menu-grid{ gap:14px; }
+    section.card{ padding:16px 18px 10px; }
+  }
+  @media (min-width:768px){
+    .search-wrap{ padding-top:16px; }
+    .search-box{ margin:0 auto; }
+    main{ padding:10px 16px 80px; }
+  }
+  @media (min-width:1024px){
+    :root{ --header-h:58px; }
+    .brand .en{ font-size:1.15rem; }
+    .hero h1{ font-size:2rem; }
+    /* Two columns of menu sections side by side */
+    .menu-grid{ grid-template-columns:1fr 1fr; align-items:start; }
+    .menu-grid > .span-full{ grid-column:1 / -1; }
+  }
+  @media (min-width:1440px){
+    main{ max-width:1100px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <span class="kn">ಶ್ರೀ ಉಡುಪಿ ಪಾರ್ಕ್</span>
+      <span class="en">Sri Udupi Park</span>
+    </div>
+    <div class="veg-badge"><i></i>PURE VEG</div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Sri Udupi Park</h1>
+  <p class="tag">Veg Family Restaurant</p>
+  <div class="pills">
+    <span class="pill">⏰ 7:00 AM – 10:30 PM</span>
+    <span class="pill">🥣 Tiffins 7–10:30 AM</span>
+    <span class="pill">🍛 Lunch &amp; Dinner 12–4 PM · 7–10:30 PM</span>
+  </div>
+</div>
+
+<nav class="chips-bar" aria-label="Menu categories">
+  <div class="chips" id="chips"></div>
+</nav>
+
+<div class="search-wrap">
+  <form class="search-box" role="search" onsubmit="return false">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" id="q" placeholder="Search the menu… (e.g. dosa, paneer)" aria-label="Search menu items" autocomplete="off">
+    <button type="button" class="clear-btn" id="clear" aria-label="Clear search">✕</button>
+  </form>
+</div>
+
+<main>
+  <div class="promo span-full">
+    <div>
+      <div class="p-title">Rice Bath Combo</div>
+      <div class="p-sub">Available 4 PM – 8 PM</div>
+    </div>
+    <div class="p-price"><b>₹100</b><span>full combo</span></div>
+  </div>
+
+  <div class="menu-grid" id="menu"></div>
+  <p class="no-results" id="noResults">No dishes match your search. Try “dosa”, “rice” or “soup”.</p>
+</main>
+
+<footer>
+  <p><b>ಶ್ರೀ ಉಡುಪಿ ಪಾರ್ಕ್ · SRI UDUPI PARK</b><br>
+  Veg Family Restaurant · Open 7:00 AM – 10:30 PM<br>
+  Breakfast 7–10:30 AM · Lunch 12–4 PM · Tiffin Evening 4–8 PM · Dinner 7–10:30 PM</p>
+</footer>
+
+<button class="top-btn" id="topBtn" aria-label="Back to top">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+
+<script>
+/* ============ MENU DATA (from printed menu, Nov 2026) ============ */
+const MENU = [
+  { id:"dosa", name:"Dosa Treat", time:"7 AM – 10 PM", items:[
+    ["Masala Dosa",90],["Plain Dosa",80],["Butter Masala Dosa",120],["Butter Plain Dosa",120],
+    ["Open Butter Masala Dosa",135],["Onion Uttappa",110],["Set Dosa",90],["Neer Dosa",100],
+    ["Cheese Plain Dosa",120],["Cheese Masala Dosa",140],["Paneer Masala Dosa",140],
+    ["Paneer Plain Dosa",120],["Rava Dosa",100],["Rava Onion Masala Dosa",150],
+    ["Rava Masala Dosa",120],["Ghee Plain Dosa",100],["Ghee Masala Dosa",120],
+    ["Ghee Pudi Masala Dosa",160],["Ghee Pudi Plain Dosa",150],["Day Special Dosa",170],["Ragi Dosa",90]
+  ]},
+  { id:"tiffins", name:"South Indian Tiffins", time:"7 AM – 10:30 AM", items:[
+    ["Idly (2)",50],["Vada (1)",50],["Idly (1) + Vada (1)",80],["Idly (2) + Vada (1)",90],
+    ["Rava Idly",65],["Tatte Idly with Butter (1)",60],["Curd Vada",60],["Rice Bath",70],
+    ["Pongal",90],["Bisi Bele Bath",80],["Poori",90],["Kara Bath",50],["Kesari Bath",50],
+    ["Chow Chow Bath",90],["Pakoda / Bajji",60],["Bonda Soup",60],["Bun (2)",90],["Bun (1)",50],
+    ["Girmitt",60],["Curd Rice",90]
+  ]},
+  { id:"rice", name:"Chinese Rice Items", time:"", items:[
+    ["Veg Fried Rice",170],["Gobi Fried Rice",180],["Jeera Fried Rice",190],
+    ["Paneer Fried Rice",220],["Mushroom Fried Rice",200],["Veg Ginger Fried Rice",180],
+    ["Veg Manchow Fried Rice",200],["Veg Schezwan Fried Rice",220],["Ghee Rice",190]
+  ]},
+  { id:"chineseveg", name:"Chinese Vegetables", time:"", items:[
+    ["Paneer Chilly",210],["Gobi Chilly",180],["Baby Corn Chilly",200],["Mushroom Chilly",190],
+    ["Veg Ball Chilly",160],["Gobi 65",180],["Paneer 65",240],["Mushroom 65",200],
+    ["Baby Corn 65",210],["Gobi Pepper Dry",190],["Paneer Pepper Dry",240],
+    ["Mushroom Pepper Dry",230],["Baby Corn Pepper Dry",190],["Gobi Manchurian",130],
+    ["Paneer Manchurian",200],["Mushroom Manchurian",180],["Baby Corn Manchurian",190]
+  ]},
+  { id:"soups", name:"Soups", time:"", items:[
+    ["Hot & Sour Soup",125],["Manchow Soup",150],["Mushroom Soup",125],["Veg Soup",100],
+    ["Sweet Corn Soup",110],["Tomato Soup",100]
+  ]},
+  { id:"noodles", name:"Noodles", time:"", items:[
+    ["Veg Noodles",170],["Paneer Noodles",220],["Veg Hakka Noodles",240],
+    ["Mushroom Noodles",200],["Veg Schezwan Noodles",220]
+  ]},
+  { id:"starters", name:"North Indian Starters", time:"12–4 PM · 7–10:30 PM", items:[
+    ["Paneer Tikka",250],["Bastic Kabab",270],["Mushroom Tikka",260],["Baby Corn Tikka",270],
+    ["Crispy Baby Corn",220],["Paneer Kurkure",200],["Baby Corn Kabab",230],
+    ["Paneer Kabab",240],["Baby Corn Lollipop",250]
+  ]},
+  { id:"curries", name:"North Indian Curries", time:"12–4 PM · 7–10:30 PM", items:[
+    ["Dal Fry",125],["Dal Tadka",145],["Paneer Kofta",220],["Paneer Butter Masala",235],
+    ["Mushroom Masala",230],["Mixed Vegetable Curry",175],["Palak Paneer",230],
+    ["Kaju Masala",240],["Veg Kolhapuri",255],["Paneer Kadai",265],["Rasani Dal",150]
+  ]},
+  { id:"biryani", name:"Biryani · Pulav · Khichdi", time:"12–4 PM · 7–10:30 PM", items:[
+    ["Handi Biriyani",230],["Veg Biriyani",180],["Mushroom Biriyani",235],
+    ["Paneer Makhani Biriyani",280],["Manchurian Biriyani",235],["Veg Pulav",160],["Dal Khichdi",190]
+  ]},
+  { id:"breads", name:"Indian Breads", time:"12–4 PM · 7–10:30 PM", items:[
+    ["Chapathi",35],["Roti",40],["Naan",50],["Kulcha",50],["Butter Roti",55],
+    ["Butter Naan",65],["Butter Kulcha",65]
+  ]},
+  { id:"juices", name:"Fresh Juices & Shakes", time:"", items:[
+    ["Butter Milk",50],["Fresh Lime Juice",50],["Fresh Lime Soda",70],["Pineapple Juice",100]
+  ]},
+  { id:"hotbev", name:"Hot Beverages", time:"7 AM – 10:30 AM", items:[
+    ["Coffee / Tea",30],["Black Coffee",30],["Badam Milk",35],["Bournvita / Horlicks",40],
+    ["Nescafe",40],["Lemon Tea",40],["Sugarless Tea",40]
+  ]}
+];
+
+const money = n => "₹" + n;
+
+/* ============ RENDER ============ */
+const menuEl = document.getElementById("menu");
+const chipsEl = document.getElementById("chips");
+const q = document.getElementById("q");
+const clearBtn = document.getElementById("clear");
+const noResults = document.getElementById("noResults");
+const promo = document.querySelector(".promo");
+
+function render(){
+  const term = q.value.trim().toLowerCase();
+  const termWords = term.split(/\s+/).filter(Boolean);
+  let shown = 0;
+
+  let chipsHTML = `<button class="chip" data-cat="all" aria-pressed="true">All Items</button>`;
+  MENU.forEach(c => { chipsHTML += `<button class="chip" data-cat="${c.id}" aria-pressed="false">${c.name}</button>`; });
+  chipsEl.innerHTML = chipsHTML;
+
+  let html = "";
+  MENU.forEach(c => {
+    c._items = c.items.filter(([name]) => {
+      if(!termWords.length) return true;
+      return termWords.every(w => name.toLowerCase().includes(w) || c.name.toLowerCase().includes(w));
+    });
+    if(!c._items.length) return;
+    shown += c._items.length;
+    html += `<section class="card" id="sec-${c.id}">
+      <div class="sec-head">
+        <h2><i aria-hidden="true"></i>${c.name}</h2>
+        ${c.time ? `<span class="sec-time">🕐 ${c.time}</span>` : ""}
+      </div>
+      <ul class="items">
+        ${c._items.map(([n,p]) => `<li><span class="i-name">${n}</span><span class="i-price">${money(p)}</span></li>`).join("")}
+      </ul>
+    </section>`;
+  });
+
+  menuEl.innerHTML = html;
+  promo.classList.toggle("hidden", termWords.length > 0);
+  noResults.classList.toggle("show", shown === 0);
+  clearBtn.classList.toggle("show", term.length > 0);
+
+  // keep active chip valid after search
+  const active = chipsEl.querySelector('.chip[aria-pressed="true"]');
+  if(active && active.dataset.cat !== "all"){
+    const sec = document.getElementById("sec-" + active.dataset.cat);
+    if(!sec){ // active category has no search matches → fall back to All
+      active.setAttribute("aria-pressed","false");
+      chipsEl.querySelector('[data-cat="all"]').setAttribute("aria-pressed","true");
+    }
+  }
+  measureChips();
+}
+
+/* ============ INTERACTIONS ============ */
+function setChipsHeight(){
+  document.documentElement.style.setProperty("--chips-h", chipsEl.offsetHeight + "px");
+}
+const measureChips = () => setChipsHeight();
+window.addEventListener("resize", measureChips, {passive:true});
+window.addEventListener("load", measureChips);
+
+chipsEl.addEventListener("click", e => {
+  const btn = e.target.closest(".chip");
+  if(!btn) return;
+  chipsEl.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === btn ? "true" : "false"));
+  document.querySelectorAll("section.card").forEach(s => s.classList.add("hidden"));
+  if(btn.dataset.cat === "all"){
+    document.querySelectorAll("section.card").forEach(s => s.classList.remove("hidden"));
+  }else{
+    const sec = document.getElementById("sec-" + btn.dataset.cat);
+    if(sec) sec.classList.remove("hidden");
+  }
+  promo.classList.add("hidden");
+  noResults.classList.remove("show");
+  q.value = ""; clearBtn.classList.remove("show");
+  measureChips();
+  const first = document.querySelector("section.card:not(.hidden)");
+  const y = first ? first.getBoundingClientRect().top + window.scrollY - (document.querySelector("header").offsetHeight + chipsEl.offsetHeight + 8) : 0;
+  window.scrollTo({top: Math.max(0, y), behavior:"smooth"});
+});
+
+q.addEventListener("input", () => {
+  const wasFiltered = chipsEl.querySelector('.chip[aria-pressed="true"]').dataset.cat !== "all";
+  if(wasFiltered){
+    chipsEl.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.cat === "all" ? "true" : "false"));
+    document.querySelectorAll("section.card").forEach(s => s.classList.toggle("hidden", false));
+  }
+  render();
+});
+
+clearBtn.addEventListener("click", () => { q.value = ""; render(); q.focus(); });
+
+const topBtn = document.getElementById("topBtn");
+topBtn.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+window.addEventListener("scroll", () => {
+  topBtn.classList.toggle("show", window.scrollY > 350);
+}, {passive:true});
+
+render();
+</script>
+</body>
+</html>
