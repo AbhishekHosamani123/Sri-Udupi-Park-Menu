@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#5e1212">
 <meta name="description" content="Sri Udupi Park Veg Family Restaurant — digital menu. Scan, browse and order. No app needed.">
 <title>Sri Udupi Park — Menu | Veg Family Restaurant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --maroon:#5e1212;
@@ -27,7 +30,7 @@
   html{ scroll-padding-top:calc(var(--header-h) + 8px); -webkit-text-size-adjust:100%; }
   html, body{ overflow-x:clip; }
   body{
-    font-family:"Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family:"Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
     background:var(--cream);
     color:var(--ink);
     line-height:1.45;
@@ -235,6 +238,14 @@
     touch-action:manipulation;
   }
   .review-cta .r-btn:active{ transform:scale(.97); }
+
+  /* Display font for headings — Bricolage Grotesque, as used in modern web apps.
+     Kannada text intentionally falls back to system fonts (no Kannada glyphs in Bricolage). */
+  h1, h2, .brand .en, .review-cta .r-title, .promo .p-title{
+    font-family:"Bricolage Grotesque", "Inter", "Segoe UI", system-ui, sans-serif;
+    font-optical-sizing:auto;
+    letter-spacing:.005em;
+  }
   /* ------- Footer ------- */
   footer{
     background:var(--maroon-dark); color:#e9d9c4;
@@ -339,7 +350,7 @@
       <div class="r-title">⭐ Enjoyed your meal?</div>
       <p class="r-sub">Rate us on Google — it takes just 10 seconds and helps us a lot. Thank you!</p>
     </div>
-    <a class="r-btn" href="https://search.google.com/local/writereview?placeid=ChIJ11k3PwAXrjsRVNbDfohWSoc"
+    <a class="r-btn" href="https://google-review-rho-eosin.vercel.app/r/Radha13"
        target="_blank" rel="noopener">
       Rate on Google
     </a>
