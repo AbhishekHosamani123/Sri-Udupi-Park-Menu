@@ -231,33 +231,69 @@
   }
   .promo .p-price b{ font-size:1.25rem; font-variant-numeric:tabular-nums; }
   .promo .p-price span{ display:block; font-size:.68rem; color:#f3d9a8; }
-  /* ------- Review CTA ------- */
+  /* ------- Review CTAs (Google review theme) ------- */
+  .g-logo{ flex-shrink:0; display:inline-flex; }
+
+  .hero-rate{
+    margin-top:10px;
+    display:inline-flex; align-items:center; gap:10px;
+    min-height:46px;
+    padding:8px 16px 8px 13px;
+    background:#fff;
+    color:#3c4043;                                  /* Google grey-800 */
+    border-radius:8px;                              /* Material button radius */
+    font-weight:600; font-size:.92rem;
+    letter-spacing:.01em;
+    text-decoration:none;
+    box-shadow:0 4px 14px rgba(0,0,0,.28), 0 1px 2px rgba(0,0,0,.2);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .hero-rate:hover{
+    transform:translateY(-1px);
+    box-shadow:0 7px 18px rgba(0,0,0,.32), 0 1px 2px rgba(0,0,0,.2);
+  }
+  .hero-rate:active{ transform:scale(.98); box-shadow:0 2px 8px rgba(0,0,0,.3); }
+  .hero-rate-text{ display:flex; flex-direction:column; align-items:flex-start; line-height:1.2; }
+  .hero-rate .rr-stars{ color:#FBBC04; font-size:.72rem; letter-spacing:2px; margin-top:1px; }
+
   .review-cta{
     margin-top:14px;
-    background:linear-gradient(135deg, #f5b93a, #e8971e);
-    border-radius:var(--radius);
+    background:#fff;
+    border:1px solid #dadce0;                       /* Google border grey */
+    border-radius:12px;
     padding:16px 16px;
     display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    color:#3c2006;
+    color:#3c4043;
+    box-shadow:0 1px 3px rgba(60,64,67,.16);
     scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 8px);
   }
-  .review-cta .r-title{ font-weight:800; font-size:1.02rem; }
-  .review-cta .r-sub{ font-size:.8rem; margin-top:2px; color:#5a3409; }
+  .rc-main{ min-width:0; flex:1; }
+  .rc-brand{ display:flex; align-items:center; gap:10px; }
+  .review-cta .r-title{ font-weight:700; font-size:1.02rem; color:#202124; }      /* Google grey-900 */
+  .review-cta .r-stars{ color:#FBBC04; font-size:.8rem; letter-spacing:2.5px; }
+  .review-cta .r-sub{ font-size:.82rem; margin-top:6px; color:#5f6368; }           /* Google grey-600 */
   .review-cta .r-btn{
     flex-shrink:0;
-    min-height:48px;
+    min-height:44px;
     display:inline-flex; align-items:center; justify-content:center;
-    padding:0 22px;
-    margin-left:auto;
-    border-radius:12px;
-    background:var(--maroon-dark);
-    color:#fff; font-weight:800; font-size:.95rem;
+    padding:0 20px;
+    border-radius:8px;
+    background:#1a73e8;                             /* Google blue */
+    color:#fff; font-weight:600; font-size:.9rem;
     text-decoration:none;
-    box-shadow:0 3px 8px rgba(60,32,6,.35);
-    touch-action:manipulation;
+    box-shadow:0 1px 3px rgba(26,115,232,.4);
+    transition:background .15s ease, box-shadow .15s ease, transform .15s ease;
   }
-  .review-cta .r-btn:active{ transform:scale(.97); }
+  .review-cta .r-btn:hover{
+    background:#1765cc;                             /* Google blue shade hover */
+    box-shadow:0 3px 8px rgba(26,115,232,.45);
+  }
+  .review-cta .r-btn:active{ transform:scale(.98); background:#1c5ba8; }
+  .review-cta a:focus-visible, .hero-rate:focus-visible{
+    outline:3px solid #4285F4; outline-offset:2px;
+  }
 
+  /* ------- Footer ------- */
   /* Display font for headings — Bricolage Grotesque, as used in modern web apps.
      Kannada text intentionally falls back to system fonts (no Kannada glyphs in Bricolage). */
   h1, h2, .brand .en, .review-cta .r-title, .promo .p-title{
@@ -301,6 +337,7 @@
     .search-wrap{ padding-top:16px; }
     .search-box{ margin:0 auto; }
     main{ padding:10px 16px 80px; }
+    .review-cta .r-btn{ margin-left:auto; }
   }
   @media (min-width:1024px){
     :root{ --header-h:58px; }
@@ -338,8 +375,19 @@
     <span class="pill">🥣 Tiffins 7–10:30 AM</span>
     <span class="pill pill-wide">🍛 Lunch &amp; Dinner 12–4 PM · 7–10:30 PM</span>
   </div>
-  <a class="hero-rate" href="https://google-review-rho-eosin.vercel.app/r/Radha13" target="_blank" rel="noopener">
-    ⭐ Give a Google Review
+  <a class="hero-rate" href="https://google-review-rho-eosin.vercel.app/r/Radha13" target="_blank" rel="noopener" aria-label="Rate us on Google">
+    <span class="g-logo" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+    </span>
+    <span class="hero-rate-text">
+      <span class="rr-t">Rate us on Google</span>
+      <span class="rr-stars" aria-hidden="true">★★★★★</span>
+    </span>
   </a>
 </div>
 
@@ -368,13 +416,26 @@
   <p class="no-results" id="noResults">No dishes match your search. Try “dosa”, “rice” or “soup”.</p>
 
   <section class="review-cta" id="rateus">
-    <div>
-      <div class="r-title">⭐ Enjoyed your meal?</div>
-      <p class="r-sub">Rate us on Google — it takes just 10 seconds and helps us a lot. Thank you!</p>
+    <div class="rc-main">
+      <div class="rc-brand">
+        <span class="g-logo" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+        </span>
+        <div>
+          <div class="r-title">Rate your experience</div>
+          <div class="r-stars" aria-hidden="true">★★★★★</div>
+        </div>
+      </div>
+      <p class="r-sub">Your review takes just 10 seconds and helps our family restaurant grow. Thank you!</p>
     </div>
     <a class="r-btn" href="https://google-review-rho-eosin.vercel.app/r/Radha13"
        target="_blank" rel="noopener">
-      Rate on Google
+      Write a review on Google
     </a>
   </section>
 </main>
