@@ -209,6 +209,32 @@
   }
   .promo .p-price b{ font-size:1.25rem; font-variant-numeric:tabular-nums; }
   .promo .p-price span{ display:block; font-size:.68rem; color:#f3d9a8; }
+  /* ------- Review CTA ------- */
+  .review-cta{
+    margin-top:14px;
+    background:linear-gradient(135deg, #f5b93a, #e8971e);
+    border-radius:var(--radius);
+    padding:16px 16px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    color:#3c2006;
+    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 8px);
+  }
+  .review-cta .r-title{ font-weight:800; font-size:1.02rem; }
+  .review-cta .r-sub{ font-size:.8rem; margin-top:2px; color:#5a3409; }
+  .review-cta .r-btn{
+    flex-shrink:0;
+    min-height:48px;
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:0 22px;
+    margin-left:auto;
+    border-radius:12px;
+    background:var(--maroon-dark);
+    color:#fff; font-weight:800; font-size:.95rem;
+    text-decoration:none;
+    box-shadow:0 3px 8px rgba(60,32,6,.35);
+    touch-action:manipulation;
+  }
+  .review-cta .r-btn:active{ transform:scale(.97); }
   /* ------- Footer ------- */
   footer{
     background:var(--maroon-dark); color:#e9d9c4;
@@ -307,6 +333,17 @@
 
   <div class="menu-grid" id="menu"></div>
   <p class="no-results" id="noResults">No dishes match your search. Try “dosa”, “rice” or “soup”.</p>
+
+  <section class="review-cta" id="rateus">
+    <div>
+      <div class="r-title">⭐ Enjoyed your meal?</div>
+      <p class="r-sub">Rate us on Google — it takes just 10 seconds and helps us a lot. Thank you!</p>
+    </div>
+    <a class="r-btn" href="https://search.google.com/local/writereview?placeid=ChIJ11k3PwAXrjsRVNbDfohWSoc"
+       target="_blank" rel="noopener">
+      Rate on Google
+    </a>
+  </section>
 </main>
 
 <footer>
