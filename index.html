@@ -3,126 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#5e1212">
-<meta name="description" content="Sri Udupi Park Veg Family Restaurant — digital menu. Scan, browse and order. No app needed.">
-<title>Sri Udupi Park — Menu | Veg Family Restaurant</title>
+<meta name="theme-color" content="#420c0c">
+<meta name="description" content="Sri Udupi Park Veg Family Restaurant, Majestic, Bengaluru — digital menu. Scan, browse and order. No app needed.">
+<title>Sri Udupi Park — Menu · Veg Family Restaurant</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230e7c39'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --maroon:#5e1212;
-    --maroon-dark:#451010;
-    --maroon-mid:#7c1d1d;
-    --red:#a42222;
-    --cream:#fdf7ee;
+    /* ---- palette · printed-card identity ---- */
+    --maroon:#5d1212;          /* brand base   */
+    --maroon-deep:#420c0c;     /* header/feet  */
+    --maroon-soft:#8f2020;     /* prices       */
+    --ink:#251812;
+    --ink-soft:#5d4a3e;
+    --muted:#8a7668;
+    --paper:#fbf7ee;           /* app background */
     --card:#ffffff;
-    --ink:#2b1a12;
-    --muted:#7a6a5f;
-    --line:#eadfcd;
-    --green:#0e7a3a;
-    --gold:#e8b23a;
-    --radius:14px;
-    --header-h:52px;
-    --chips-h:0px; /* set by JS for scroll-padding */
+    --line:#ece1cf;
+    --line-strong:#dccfb6;
+    --gold:#d8a23f;            /* sari border   */
+    --gold-soft:#f0dca8;
+    --veg:#0e7c39;
+    /* ---- structure ---- */
+    --r-lg:16px; --r-md:12px; --r-sm:8px;
+    --shadow-card:0 1px 2px rgba(40,20,10,.04), 0 6px 20px -10px rgba(40,20,10,.14);
+    --header-h:54px;
+    --chips-h:0px;             /* measured by JS for scroll offsets */
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-padding-top:calc(var(--header-h) + 8px); -webkit-text-size-adjust:100%; }
+  html{
+    scroll-padding-top:calc(var(--header-h) + 8px);
+    -webkit-text-size-adjust:100%;
+    text-rendering:optimizeLegibility;
+  }
   html, body{ overflow-x:clip; }
   body{
-    font-family:"Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
-    background:var(--cream);
+    font-family:"Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    background:var(--paper);
     color:var(--ink);
-    line-height:1.45;
+    line-height:1.5;
     font-size:16px;
   }
-  /* ------- Header (compact, sticky, never covers content thanks to scroll-padding) ------- */
+  h1, h2, .seg-title, .p-title{                       /* display face */
+    font-family:"Bricolage Grotesque", "Inter", "Segoe UI", system-ui, sans-serif;
+    font-optical-sizing:auto;
+    letter-spacing:.004em;
+  }
+  /* gold "sari border" — the printed-menu signature */
+  .sari{
+    height:7px; flex:none;
+    background:
+      linear-gradient(45deg,  var(--gold) 25%, transparent 25% 75%, var(--gold) 75%) 0 50%/12px 12px,
+      linear-gradient(-45deg, var(--gold) 25%, transparent 25% 75%, var(--gold) 75%) 0 50%/12px 12px;
+    background-repeat:repeat-x;
+    opacity:.8;
+  }
+
+  /* ================= HEADER ================= */
   header{
     position:sticky; top:0; z-index:50;
-    background:var(--maroon);
-    color:#fff;
-    box-shadow:0 1px 4px rgba(0,0,0,.25);
+    background:var(--maroon-deep);
+    color:#fff8ee;
+    box-shadow:0 1px 0 rgba(216,162,63,.35) inset, 0 2px 10px rgba(30,8,8,.35);
   }
   .head-inner{
     max-width:1000px; margin:0 auto;
     min-height:var(--header-h);
-    display:flex; align-items:center; gap:10px;
-    padding:8px 14px;
+    display:flex; align-items:center; gap:12px;
+    padding:8px 16px;
   }
-  .brand{ min-width:0; }
+  .brand{ min-width:0; display:flex; flex-direction:column; gap:1px; }
   .brand .kn{
-    display:block; font-size:.66rem; letter-spacing:.04em; color:var(--gold); font-weight:600;
+    font-size:.6rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--gold-soft); font-weight:600; white-space:nowrap;
   }
   .brand .en{
-    display:block; font-size:1.02rem; font-weight:700; letter-spacing:.02em;
+    font-size:1.04rem; font-weight:700; color:#fff;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    line-height:1.15;
   }
-  .veg-badge{
-    margin-left:auto; flex-shrink:0;
-    display:flex; align-items:center; gap:6px;
-    border:2px solid var(--green); color:#c9f3d6;
-    font-size:.72rem; font-weight:700; letter-spacing:.05em;
-    padding:5px 9px; border-radius:8px; min-height:32px;
+  .veg-mark{
+    margin-left:auto; flex:none;
+    display:inline-flex; align-items:center; gap:7px;
+    color:var(--gold-soft);
+    font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
   }
-  .veg-badge i{
-    width:10px; height:10px; border-radius:50%;
-    background:var(--green); flex-shrink:0;
+  .veg-mark i{
+    width:18px; height:18px; border-radius:4px;        /* FSSAI veg mark */
+    border:2px solid var(--veg); position:relative; background:#fff2;
   }
-  /* ------- Hero (short so the menu is visible with minimal scroll) ------- */
+  .veg-mark i::after{
+    content:""; position:absolute; inset:2.5px; border-radius:50%;
+    background:var(--veg);
+  }
+
+  /* ================= HERO ================= */
   .hero{
     background:
-      radial-gradient(120% 140% at 85% -20%, rgba(232,178,58,.16), transparent 55%),
-      linear-gradient(180deg, var(--maroon-dark), #6d1818);
-    color:#fff;
+      radial-gradient(110% 160% at 50% -30%, rgba(216,162,63,.14), transparent 52%),
+      var(--maroon);
+    color:#fff8ee;
     text-align:center;
-    padding:16px 16px 18px;
+    padding:14px 16px 16px;
+    border-bottom:1px solid rgba(216,162,63,.35);
+  }
+  .hero .eyebrow{
+    font-size:.68rem; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold-soft);
   }
   .hero h1{
-    font-size:1.35rem; line-height:1.2; letter-spacing:.01em;
+    margin-top:6px;
+    font-size:clamp(1.42rem, 6vw, 2.05rem);
+    font-weight:800; line-height:1.1;
   }
-  .hero .tag{
-    margin-top:5px; font-size:.86rem; color:#f3d9a8; font-weight:600;
+  .hero .divider{
+    width:48px; height:2px; margin:9px auto 8px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
   }
-  .hero .pills{
-    margin-top:11px; display:flex; flex-wrap:wrap; justify-content:center; gap:7px;
+  .hero .meta{
+    font-size:.8rem; color:#e8d9c2;
+    display:flex; flex-wrap:wrap; justify-content:center;
+    column-gap:16px; row-gap:2px; line-height:1.45;
   }
-  .pill{
-    font-size:.74rem; font-weight:600;
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.25);
-    padding:5px 11px; border-radius:999px;
-    white-space:nowrap;
-  }
-  .hero-rate{
-    margin-top:10px;
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:44px;
-    padding:0 20px;
-    border-radius:999px;
-    background:linear-gradient(135deg, #f6c04a, #e8971e);
-    color:#3c2006;
-    font-weight:800; font-size:.92rem;
-    text-decoration:none;
-    box-shadow:0 3px 10px rgba(0,0,0,.35);
-    touch-action:manipulation;
-  }
-  .hero-rate:active{ transform:scale(.97); }
-  @media (max-width:430px){
-    .pill-wide{ display:none; }  /* keep the first dish inside small phone viewports */
-    .hero{ padding:13px 16px 15px; }
-    .hero .pills{ margin-top:9px; gap:6px; }
-  }
-  /* ------- Category chips: horizontally scrollable on small screens ------- */
+  .hero .meta b{ color:#fff; font-weight:600; }
+  .hero .rate-slot{ margin-top:11px; display:flex; justify-content:center; }
+
+  /* ================= CATEGORY CHIPS ================= */
   .chips-bar{
     position:sticky; top:var(--header-h); z-index:40;
-    background:var(--cream);
+    background:rgba(251,247,238,.92);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
-    box-shadow:0 2px 5px rgba(46,17,17,.06);
+    box-shadow:0 3px 10px -6px rgba(40,20,10,.18);
   }
   .chips{
     max-width:1000px; margin:0 auto;
     display:flex; gap:8px;
-    padding:9px 14px;
+    padding:7px 14px;
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
@@ -130,228 +151,280 @@
   .chips::-webkit-scrollbar{ display:none; }
   .chip{
     flex:0 0 auto;
-    min-height:44px;             /* comfortable tap size */
-    padding:0 16px;
+    min-height:44px; padding:0 16px;
     display:inline-flex; align-items:center;
-    border:1.5px solid var(--maroon-mid);
+    border:1px solid var(--line-strong);
     border-radius:999px;
-    background:#fff; color:var(--maroon-mid);
-    font-size:.86rem; font-weight:700;
-    cursor:pointer;
-    touch-action:manipulation;
+    background:var(--card); color:var(--maroon-soft);
+    font-size:.86rem; font-weight:600;
+    letter-spacing:.01em;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
   }
   .chip[aria-pressed="true"]{
-    background:var(--maroon-mid); color:#fff;
+    background:var(--maroon); border-color:var(--maroon); color:#fff8ee;
   }
-  .chip:focus-visible, button:focus-visible, input:focus-visible, .top-btn:focus-visible{
-    outline:3px solid var(--gold); outline-offset:2px;
+  .chip:focus-visible, button:focus-visible, input:focus-visible, .top-btn:focus-visible,
+  .rating a:focus-visible{
+    outline:3px solid #e3a83c; outline-offset:2px;
   }
-  /* ------- Search ------- */
-  .search-wrap{
-    max-width:1000px; margin:0 auto;
-    padding:12px 14px 4px;
-  }
+
+  /* ================= SEARCH ================= */
+  .search-wrap{ max-width:1000px; margin:0 auto; padding:10px 12px 0; }
+  .search-wrap > form{ max-width:560px; margin:0 auto; }
   .search-box{
     display:flex; align-items:center; gap:8px;
-    background:#fff; border:1.5px solid var(--line);
-    border-radius:12px; padding:2px 4px 2px 12px;
-    max-width:560px;
+    background:var(--card);
+    border:1px solid var(--line-strong);
+    border-radius:var(--r-md);
+    padding:2px 4px 2px 12px;
+    box-shadow:var(--shadow-card);
   }
-  .search-box svg{ flex-shrink:0; color:var(--muted); }
+  .search-box svg{ flex:none; color:var(--muted); }
   .search-box input{
     flex:1; min-width:0;
     border:0; background:transparent;
-    font-size:16px;                 /* prevents iOS zoom-on-focus */
+    font-size:16px;                    /* no iOS zoom */
     padding:10px 0; min-height:44px;
     color:var(--ink);
   }
+  .search-box input::placeholder{ color:var(--muted); }
   .search-box input:focus{ outline:none; }
   .clear-btn{
-    flex-shrink:0;
-    width:44px; height:44px;
+    flex:none; width:44px; height:44px;
     border:0; background:transparent; color:var(--muted);
-    font-size:1.25rem; cursor:pointer; border-radius:10px;
+    font-size:1.15rem; cursor:pointer; border-radius:var(--r-sm);
     display:none;
   }
   .clear-btn.show{ display:inline-flex; align-items:center; justify-content:center; }
-  /* ------- Menu ------- */
-  main{ max-width:1000px; margin:0 auto; padding:6px 12px 70px; }
+
+  /* ================= MENU ================= */
+  main{ max-width:1000px; margin:0 auto; padding:8px 12px 74px; }
   .menu-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+
   section.card{
     background:var(--card);
     border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:14px 14px 8px;
-    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 8px);
+    border-radius:var(--r-lg);
+    box-shadow:var(--shadow-card);
+    padding:16px 16px 6px;
+    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 10px);
+    min-width:0;
   }
-  .sec-head{ display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; margin-bottom:10px; }
+  .sec-head{ margin-bottom:8px; }
   .sec-head h2{
-    font-size:1.02rem; font-weight:800; color:var(--maroon-mid);
-    display:flex; align-items:center; gap:8px;
+    font-size:1.06rem; font-weight:700; color:var(--maroon);
+    display:flex; align-items:baseline; gap:8px;
+    padding-left:11px;
+    border-left:3px solid var(--gold);          /* printed-card gold rule */
+    line-height:1.25;
   }
-  .sec-head h2 i{
-    width:12px; height:12px; flex-shrink:0;
-    background:#fff; border:2px solid var(--green); border-radius:3px; position:relative;
+  .sec-sub{
+    display:block; margin-top:4px;
+    padding-left:14px;
+    font-size:.72rem; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted);
   }
-  .sec-head h2 i::after{
-    content:""; position:absolute; inset:2px; border-radius:50%;
-    background:var(--green);
-  }
-  .sec-time{
-    font-size:.74rem; font-weight:600; color:var(--muted);
-    background:var(--cream); border:1px solid var(--line);
-    padding:3px 9px; border-radius:999px; white-space:nowrap;
-  }
-  ul.items{ list-style:none; }
+  ul.items{ list-style:none; margin-top:6px; }
   ul.items li{
     display:flex; align-items:baseline; gap:12px;
-    padding:9px 2px;
-    border-bottom:1px dashed var(--line);
+    padding:8.5px 2px;
+    border-bottom:1px solid var(--line);
   }
   ul.items li:last-child{ border-bottom:0; }
-  .i-name{ flex:1; min-width:0; overflow-wrap:break-word; }   /* long names wrap, never overlap price */
+  .i-name{ flex:1; min-width:0; overflow-wrap:break-word; font-size:.95rem; font-weight:500; }
   .i-price{
-    flex-shrink:0; text-align:right;
-    font-weight:800; color:var(--red);
-    font-size:.98rem;
-    font-variant-numeric:tabular-nums;   /* prices in a tidy column */
+    flex:none; text-align:right;
+    font-weight:700; color:var(--maroon-soft);
+    font-size:.92rem;
+    font-variant-numeric:tabular-nums;
     white-space:nowrap;
   }
-  /* ------- Promo strip ------- */
-  .promo{
-    background:linear-gradient(135deg, var(--maroon-mid), #96302f);
-    color:#fff; border-radius:var(--radius);
-    padding:14px 16px; margin:2px 0 12px;
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-  }
-  .promo .p-title{ font-weight:800; font-size:1rem; }
-  .promo .p-sub{ font-size:.8rem; color:#f3d9a8; }
-  .promo .p-price{
-    margin-left:auto; text-align:right; flex-shrink:0;
-  }
-  .promo .p-price b{ font-size:1.25rem; font-variant-numeric:tabular-nums; }
-  .promo .p-price span{ display:block; font-size:.68rem; color:#f3d9a8; }
-  /* ------- Review CTAs (Google review theme) ------- */
-  .g-logo{ flex-shrink:0; display:inline-flex; }
 
+  /* ================= COMBO STRIP ================= */
+  .promo{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--gold);
+    border-radius:var(--r-md);
+    box-shadow:var(--shadow-card);
+    padding:11px 13px; margin:0 0 12px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    color:var(--ink);
+  }
+  .promo .k-eyebrow{
+    display:block;
+    font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold);
+  }
+  .promo .p-title{ font-size:1rem; font-weight:700; color:var(--ink); margin-top:2px; }
+  .promo .p-sub{ font-size:.78rem; color:var(--muted); margin-top:1px; }
+  @media (max-width:599px){
+    .promo .p-sub{ display:none; }   /* keep dish list within first phone viewport */
+  }
+  .promo .p-price{
+    margin-left:auto; text-align:right; flex:none;
+    font-family:"Bricolage Grotesque","Inter",sans-serif;
+    font-weight:800; font-size:1.35rem; color:var(--maroon);
+    font-variant-numeric:tabular-nums; line-height:1;
+  }
+  .promo .p-price small{
+    display:block; font-family:"Inter"; font-weight:500;
+    font-size:.66rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase;
+    margin-top:3px;
+  }
+
+  /* ================= GOOGLE REVIEW CTA ================= */
+  .g-logo{ flex:none; display:inline-flex; }
   .hero-rate{
-    margin-top:10px;
     display:inline-flex; align-items:center; gap:10px;
-    min-height:46px;
-    padding:8px 16px 8px 13px;
-    background:#fff;
-    color:#3c4043;                                  /* Google grey-800 */
-    border-radius:8px;                              /* Material button radius */
-    font-weight:600; font-size:.92rem;
-    letter-spacing:.01em;
+    min-height:46px; padding:8px 16px 8px 13px;
+    background:#fff; color:#3c4043;
+    border-radius:var(--r-sm);
+    font-weight:600; font-size:.92rem; letter-spacing:.01em;
     text-decoration:none;
     box-shadow:0 4px 14px rgba(0,0,0,.28), 0 1px 2px rgba(0,0,0,.2);
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .hero-rate:hover{
-    transform:translateY(-1px);
-    box-shadow:0 7px 18px rgba(0,0,0,.32), 0 1px 2px rgba(0,0,0,.2);
-  }
-  .hero-rate:active{ transform:scale(.98); box-shadow:0 2px 8px rgba(0,0,0,.3); }
+  .hero-rate:hover{ transform:translateY(-1px); box-shadow:0 7px 18px rgba(0,0,0,.32); }
+  .hero-rate:active{ transform:scale(.98); }
   .hero-rate-text{ display:flex; flex-direction:column; align-items:flex-start; line-height:1.2; }
-  .hero-rate .rr-stars{ color:#FBBC04; font-size:.72rem; letter-spacing:2px; margin-top:1px; }
+  .hero-rate .rr-stars{ color:#FBBC04; font-size:.7rem; letter-spacing:2px; margin-top:1px; }
 
   .review-cta{
     margin-top:14px;
     background:#fff;
-    border:1px solid #dadce0;                       /* Google border grey */
-    border-radius:12px;
-    padding:16px 16px;
+    border:1px solid #dadce0;
+    border-radius:var(--r-md);
+    padding:16px;
     display:flex; align-items:center; gap:14px; flex-wrap:wrap;
     color:#3c4043;
     box-shadow:0 1px 3px rgba(60,64,67,.16);
-    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 8px);
+    scroll-margin-top:calc(var(--header-h) + var(--chips-h) + 10px);
   }
   .rc-main{ min-width:0; flex:1; }
   .rc-brand{ display:flex; align-items:center; gap:10px; }
-  .review-cta .r-title{ font-weight:700; font-size:1.02rem; color:#202124; }      /* Google grey-900 */
-  .review-cta .r-stars{ color:#FBBC04; font-size:.8rem; letter-spacing:2.5px; }
-  .review-cta .r-sub{ font-size:.82rem; margin-top:6px; color:#5f6368; }           /* Google grey-600 */
+  .review-cta .r-title{ font-weight:700; font-size:1rem; color:#202124; }
+  .review-cta .r-stars{ color:#FBBC04; font-size:.78rem; letter-spacing:2.5px; }
+  .review-cta .r-sub{ font-size:.82rem; margin-top:6px; color:#5f6368; max-width:42ch; }
   .review-cta .r-btn{
-    flex-shrink:0;
+    flex:none;
     min-height:44px;
     display:inline-flex; align-items:center; justify-content:center;
     padding:0 20px;
-    border-radius:8px;
-    background:#1a73e8;                             /* Google blue */
-    color:#fff; font-weight:600; font-size:.9rem;
+    border-radius:var(--r-sm);
+    background:#1a73e8; color:#fff;
+    font-weight:600; font-size:.9rem;
     text-decoration:none;
     box-shadow:0 1px 3px rgba(26,115,232,.4);
     transition:background .15s ease, box-shadow .15s ease, transform .15s ease;
   }
-  .review-cta .r-btn:hover{
-    background:#1765cc;                             /* Google blue shade hover */
-    box-shadow:0 3px 8px rgba(26,115,232,.45);
-  }
+  .review-cta .r-btn:hover{ background:#1765cc; box-shadow:0 3px 8px rgba(26,115,232,.45); }
   .review-cta .r-btn:active{ transform:scale(.98); background:#1c5ba8; }
-  .review-cta a:focus-visible, .hero-rate:focus-visible{
-    outline:3px solid #4285F4; outline-offset:2px;
-  }
 
-  /* ------- Footer ------- */
-  /* Display font for headings — Bricolage Grotesque, as used in modern web apps.
-     Kannada text intentionally falls back to system fonts (no Kannada glyphs in Bricolage). */
-  h1, h2, .brand .en, .review-cta .r-title, .promo .p-title{
-    font-family:"Bricolage Grotesque", "Inter", "Segoe UI", system-ui, sans-serif;
-    font-optical-sizing:auto;
-    letter-spacing:.005em;
-  }
-  /* ------- Footer ------- */
+  /* ================= FOOTER ================= */
   footer{
-    background:var(--maroon-dark); color:#e9d9c4;
-    text-align:center; padding:22px 16px 88px;   /* bottom room so back-to-top never covers text */
-    font-size:.84rem; line-height:1.6;
+    background:var(--maroon-deep); color:#e8d9c2;
+    border-top:none;
+    padding:22px 18px 84px;
+    font-size:.83rem;
   }
-  footer b{ color:#fff; }
-  /* ------- Back to top ------- */
+  .foot-inner{
+    max-width:1000px; margin:0 auto;
+    display:grid; grid-template-columns:minmax(0, 1fr); gap:16px;
+  }
+  .f-brand{
+    display:flex; flex-direction:column; gap:2px; text-align:center;
+  }
+  .f-brand .kn{ font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-soft); }
+  .f-brand .en{
+    font-family:"Bricolage Grotesque","Inter",sans-serif;
+    font-size:1.05rem; font-weight:700; color:#fff;
+  }
+  .f-hours{
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6px 18px;
+    background:rgba(255,248,238,.06);
+    border:1px solid rgba(216,162,63,.28);
+    border-radius:var(--r-md);
+    padding:12px 14px;
+    min-width:0;
+  }
+  .f-hours div{ display:flex; justify-content:space-between; gap:10px; min-width:0; }
+  .f-hours dt{ color:var(--gold-soft); font-weight:500; min-width:0; }
+  .f-hours dd{ color:#fff8ee; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; text-align:right; }
+  @media (max-width:359px){
+    .f-hours dd{ white-space:normal; }
+  }
+  .f-hours .f-hours-title{
+    grid-column:1/-1;
+    font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--gold-soft); font-weight:600; margin-bottom:2px;
+  }
+  .f-meta{
+    text-align:center; font-size:.72rem; color:#c9b394; line-height:1.7;
+  }
+  .f-meta b{ color:#fff8ee; font-weight:600; }
+  .f-veg{ display:flex; justify-content:center; align-items:center; gap:7px; color:var(--gold-soft); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; }
+  .f-veg i{ width:16px; height:16px; border-radius:3px; border:2px solid var(--veg); position:relative; background:#fff2; }
+  .f-veg i::after{ content:""; position:absolute; inset:2px; border-radius:50%; background:var(--veg); }
+
+  /* ================= BACK TO TOP ================= */
   .top-btn{
     position:fixed; right:14px; bottom:16px; z-index:60;
-    width:48px; height:48px; min-width:44px; min-height:44px;
+    width:48px; height:48px;
     border-radius:50%;
-    border:0; cursor:pointer;
-    background:var(--maroon-mid); color:#fff;
-    box-shadow:0 4px 12px rgba(0,0,0,.3);
+    border:1px solid rgba(216,162,63,.5);
+    cursor:pointer;
+    background:var(--maroon-deep); color:var(--gold-soft);
+    box-shadow:0 4px 14px rgba(0,0,0,.3);
     display:none;
     touch-action:manipulation;
   }
   .top-btn.show{ display:flex; align-items:center; justify-content:center; }
+
+  /* ================= STATES ================= */
   .no-results{
-    display:none; text-align:center; padding:26px 10px; color:var(--muted); font-size:.95rem;
+    display:none; text-align:center;
+    background:var(--card); border:1px dashed var(--line-strong); border-radius:var(--r-lg);
+    padding:26px 14px; color:var(--ink-soft); font-size:.92rem;
+    margin-top:12px;
   }
   .no-results.show{ display:block; }
   .hidden{ display:none !important; }
 
-  /* ====================== LARGER SCREENS ====================== */
+  /* ================= LARGER SCREENS ================= */
   @media (min-width:600px){
-    .hero h1{ font-size:1.7rem; }
-    .hero{ padding:20px 16px 22px; }
-    .menu-grid{ gap:14px; }
-    section.card{ padding:16px 18px 10px; }
+    .hero{ padding:24px 18px 24px; }
+    .hero h1{ font-size:clamp(1.5rem, 3.6vw, 2.05rem); }
+    .review-cta .r-btn{ margin-left:auto; }
+    .search-wrap{ padding-top:14px; }
+    .search-wrap > form{ margin:0 auto; }
+    .promo .p-sub{ display:block; }
+    main{ padding-top:10px; }
+    .chips{ padding:9px 16px; }
+    .promo, .review-cta{ max-width:calc(1000px - 32px); }
+    .f-meta br{ display:none; }
   }
   @media (min-width:768px){
-    .search-wrap{ padding-top:16px; }
     .search-box{ margin:0 auto; }
-    main{ padding:10px 16px 80px; }
-    .review-cta .r-btn{ margin-left:auto; }
+    main{ padding:12px 16px 84px; }
+    .menu-grid{ gap:14px; }
+    section.card{ padding:18px 20px 8px; }
   }
   @media (min-width:1024px){
     :root{ --header-h:58px; }
-    .brand .en{ font-size:1.15rem; }
-    .hero h1{ font-size:2rem; }
-    /* Two columns of menu sections side by side */
+    .brand .en{ font-size:1.14rem; }
     .menu-grid{ grid-template-columns:1fr 1fr; align-items:start; }
-    .menu-grid > .span-full{ grid-column:1 / -1; }
+    .promo, .review-cta{ grid-column:1 / -1; }
   }
-  @media (min-width:1440px){
-    main{ max-width:1100px; }
+  /* promo + review live outside .menu-grid; align their width */
+  .promo, .review-cta{ max-width:calc(1000px - 24px); margin-left:auto; margin-right:auto; }
+  @media (min-width:768px){
+    .promo, .review-cta{ max-width:calc(1000px - 32px); }
   }
-  @media (prefers-reduced-motion: reduce){
+  @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
+    .top-btn, .chip, .r-btn, .hero-rate{ transition:none; }
   }
 </style>
 </head>
@@ -363,32 +436,35 @@
       <span class="kn">ಶ್ರೀ ಉಡುಪಿ ಪಾರ್ಕ್</span>
       <span class="en">Sri Udupi Park</span>
     </div>
-    <div class="veg-badge"><i></i>PURE VEG</div>
+    <div class="veg-mark"><i></i>Veg</div>
   </div>
+  <div class="sari" aria-hidden="true"></div>
 </header>
 
 <div class="hero">
+  <p class="eyebrow">Veg Family Restaurant</p>
   <h1>Sri Udupi Park</h1>
-  <p class="tag">Veg Family Restaurant</p>
-  <div class="pills">
-    <span class="pill">⏰ 7:00 AM – 10:30 PM</span>
-    <span class="pill">🥣 Tiffins 7–10:30 AM</span>
-    <span class="pill pill-wide">🍛 Lunch &amp; Dinner 12–4 PM · 7–10:30 PM</span>
+  <div class="divider" aria-hidden="true"></div>
+  <p class="meta">
+    <span><b>Open daily</b> 7:00 AM – 10:30 PM</span>
+    <span>Majestic, Bengaluru</span>
+  </p>
+  <div class="rate-slot">
+    <a class="hero-rate" href="https://google-review-rho-eosin.vercel.app/r/Radha13" target="_blank" rel="noopener" aria-label="Rate us on Google">
+      <span class="g-logo" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+      </span>
+      <span class="hero-rate-text">
+        <span class="rr-t">Rate us on Google</span>
+        <span class="rr-stars" aria-hidden="true">★★★★★</span>
+      </span>
+    </a>
   </div>
-  <a class="hero-rate" href="https://google-review-rho-eosin.vercel.app/r/Radha13" target="_blank" rel="noopener" aria-label="Rate us on Google">
-    <span class="g-logo" aria-hidden="true">
-      <svg width="20" height="20" viewBox="0 0 48 48">
-        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-      </svg>
-    </span>
-    <span class="hero-rate-text">
-      <span class="rr-t">Rate us on Google</span>
-      <span class="rr-stars" aria-hidden="true">★★★★★</span>
-    </span>
-  </a>
 </div>
 
 <nav class="chips-bar" aria-label="Menu categories">
@@ -397,19 +473,20 @@
 
 <div class="search-wrap">
   <form class="search-box" role="search" onsubmit="return false">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input type="search" id="q" placeholder="Search the menu… (e.g. dosa, paneer)" aria-label="Search menu items" autocomplete="off">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" id="q" placeholder="Search dosas, rice, paneer…" aria-label="Search menu items" autocomplete="off">
     <button type="button" class="clear-btn" id="clear" aria-label="Clear search">✕</button>
   </form>
 </div>
 
 <main>
-  <div class="promo span-full">
+  <div class="promo">
     <div>
+      <span class="k-eyebrow">Combo · 4 PM – 8 PM</span>
       <div class="p-title">Rice Bath Combo</div>
-      <div class="p-sub">Available 4 PM – 8 PM</div>
+      <div class="p-sub">Evening special — available in-store</div>
     </div>
-    <div class="p-price"><b>₹100</b><span>full combo</span></div>
+    <div class="p-price">₹100<small>per combo</small></div>
   </div>
 
   <div class="menu-grid" id="menu"></div>
@@ -433,17 +510,32 @@
       </div>
       <p class="r-sub">Your review takes just 10 seconds and helps our family restaurant grow. Thank you!</p>
     </div>
-    <a class="r-btn" href="https://google-review-rho-eosin.vercel.app/r/Radha13"
-       target="_blank" rel="noopener">
-      Write a review on Google
+    <a class="r-btn" href="https://google-review-rho-eosin.vercel.app/r/Radha13" target="_blank" rel="noopener">
+      Write a review
     </a>
   </section>
 </main>
 
 <footer>
-  <p><b>ಶ್ರೀ ಉಡುಪಿ ಪಾರ್ಕ್ · SRI UDUPI PARK</b><br>
-  Veg Family Restaurant · Open 7:00 AM – 10:30 PM<br>
-  Breakfast 7–10:30 AM · Lunch 12–4 PM · Tiffin Evening 4–8 PM · Dinner 7–10:30 PM</p>
+  <div class="foot-inner">
+    <div class="f-brand">
+      <span class="kn">ಶ್ರೀ ಉಡುಪಿ ಪಾರ್ಕ್</span>
+      <span class="en">Sri Udupi Park</span>
+    </div>
+    <dl class="f-hours">
+      <span class="f-hours-title">Kitchen hours</span>
+      <div><dt>Breakfast &amp; tiffins</dt><dd>7:00 – 10:30 AM</dd></div>
+      <div><dt>Lunch</dt><dd>12:00 – 4:00 PM</dd></div>
+      <div><dt>Rice bath combo</dt><dd>4:00 – 8:00 PM</dd></div>
+      <div><dt>Dinner</dt><dd>7:00 – 10:30 PM</dd></div>
+    </dl>
+    <p class="f-meta">
+      <b>70, Subedar Chatram Rd, near Anand Rao Circle, Majestic, Bengaluru 560009</b>
+      · 4.8★ on Google (93 reviews)
+    </p>
+    <p class="f-veg"><i></i>Pure vegetarian · Prices in ₹</p>
+    <p class="f-meta">Menu updated November 2026 · Scan again any day — menu updates instantly</p>
+  </div>
 </footer>
 
 <button class="top-btn" id="topBtn" aria-label="Back to top">
@@ -453,7 +545,7 @@
 <script>
 /* ============ MENU DATA (from printed menu, Nov 2026) ============ */
 const MENU = [
-  { id:"dosa", name:"Dosa Treat", time:"7 AM – 10 PM", items:[
+  { id:"dosa", name:"Dosa Treat", time:"7 am – 10 pm", items:[
     ["Masala Dosa",90],["Plain Dosa",80],["Butter Masala Dosa",120],["Butter Plain Dosa",120],
     ["Open Butter Masala Dosa",135],["Onion Uttappa",110],["Set Dosa",90],["Neer Dosa",100],
     ["Cheese Plain Dosa",120],["Cheese Masala Dosa",140],["Paneer Masala Dosa",140],
@@ -461,7 +553,7 @@ const MENU = [
     ["Rava Masala Dosa",120],["Ghee Plain Dosa",100],["Ghee Masala Dosa",120],
     ["Ghee Pudi Masala Dosa",160],["Ghee Pudi Plain Dosa",150],["Day Special Dosa",170],["Ragi Dosa",90]
   ]},
-  { id:"tiffins", name:"South Indian Tiffins", time:"7 AM – 10:30 AM", items:[
+  { id:"tiffins", name:"South Indian Tiffins", time:"7 am – 10:30 am", items:[
     ["Idly (2)",50],["Vada (1)",50],["Idly (1) + Vada (1)",80],["Idly (2) + Vada (1)",90],
     ["Rava Idly",65],["Tatte Idly with Butter (1)",60],["Curd Vada",60],["Rice Bath",70],
     ["Pongal",90],["Bisi Bele Bath",80],["Poori",90],["Kara Bath",50],["Kesari Bath",50],
@@ -488,28 +580,28 @@ const MENU = [
     ["Veg Noodles",170],["Paneer Noodles",220],["Veg Hakka Noodles",240],
     ["Mushroom Noodles",200],["Veg Schezwan Noodles",220]
   ]},
-  { id:"starters", name:"North Indian Starters", time:"12–4 PM · 7–10:30 PM", items:[
+  { id:"starters", name:"North Indian Starters", time:"12 – 4 pm · 7 – 10:30 pm", items:[
     ["Paneer Tikka",250],["Bastic Kabab",270],["Mushroom Tikka",260],["Baby Corn Tikka",270],
     ["Crispy Baby Corn",220],["Paneer Kurkure",200],["Baby Corn Kabab",230],
     ["Paneer Kabab",240],["Baby Corn Lollipop",250]
   ]},
-  { id:"curries", name:"North Indian Curries", time:"12–4 PM · 7–10:30 PM", items:[
+  { id:"curries", name:"North Indian Curries", time:"12 – 4 pm · 7 – 10:30 pm", items:[
     ["Dal Fry",125],["Dal Tadka",145],["Paneer Kofta",220],["Paneer Butter Masala",235],
     ["Mushroom Masala",230],["Mixed Vegetable Curry",175],["Palak Paneer",230],
     ["Kaju Masala",240],["Veg Kolhapuri",255],["Paneer Kadai",265],["Rasani Dal",150]
   ]},
-  { id:"biryani", name:"Biryani · Pulav · Khichdi", time:"12–4 PM · 7–10:30 PM", items:[
+  { id:"biryani", name:"Biryani · Pulav · Khichdi", time:"12 – 4 pm · 7 – 10:30 pm", items:[
     ["Handi Biriyani",230],["Veg Biriyani",180],["Mushroom Biriyani",235],
     ["Paneer Makhani Biriyani",280],["Manchurian Biriyani",235],["Veg Pulav",160],["Dal Khichdi",190]
   ]},
-  { id:"breads", name:"Indian Breads", time:"12–4 PM · 7–10:30 PM", items:[
+  { id:"breads", name:"Indian Breads", time:"12 – 4 pm · 7 – 10:30 pm", items:[
     ["Chapathi",35],["Roti",40],["Naan",50],["Kulcha",50],["Butter Roti",55],
     ["Butter Naan",65],["Butter Kulcha",65]
   ]},
   { id:"juices", name:"Fresh Juices & Shakes", time:"", items:[
     ["Butter Milk",50],["Fresh Lime Juice",50],["Fresh Lime Soda",70],["Pineapple Juice",100]
   ]},
-  { id:"hotbev", name:"Hot Beverages", time:"7 AM – 10:30 AM", items:[
+  { id:"hotbev", name:"Hot Beverages", time:"7 am – 10:30 am", items:[
     ["Coffee / Tea",30],["Black Coffee",30],["Badam Milk",35],["Bournvita / Horlicks",40],
     ["Nescafe",40],["Lemon Tea",40],["Sugarless Tea",40]
   ]}
@@ -544,8 +636,8 @@ function render(){
     shown += c._items.length;
     html += `<section class="card" id="sec-${c.id}">
       <div class="sec-head">
-        <h2><i aria-hidden="true"></i>${c.name}</h2>
-        ${c.time ? `<span class="sec-time">🕐 ${c.time}</span>` : ""}
+        <h2>${c.name}</h2>
+        <span class="sec-sub">${c.time ? c.time + " · " : ""}${c._items.length} items</span>
       </div>
       <ul class="items">
         ${c._items.map(([n,p]) => `<li><span class="i-name">${n}</span><span class="i-price">${money(p)}</span></li>`).join("")}
@@ -558,11 +650,10 @@ function render(){
   noResults.classList.toggle("show", shown === 0);
   clearBtn.classList.toggle("show", term.length > 0);
 
-  // keep active chip valid after search
   const active = chipsEl.querySelector('.chip[aria-pressed="true"]');
   if(active && active.dataset.cat !== "all"){
     const sec = document.getElementById("sec-" + active.dataset.cat);
-    if(!sec){ // active category has no search matches → fall back to All
+    if(!sec){
       active.setAttribute("aria-pressed","false");
       chipsEl.querySelector('[data-cat="all"]').setAttribute("aria-pressed","true");
     }
@@ -594,7 +685,7 @@ chipsEl.addEventListener("click", e => {
   q.value = ""; clearBtn.classList.remove("show");
   measureChips();
   const first = document.querySelector("section.card:not(.hidden)");
-  const y = first ? first.getBoundingClientRect().top + window.scrollY - (document.querySelector("header").offsetHeight + chipsEl.offsetHeight + 8) : 0;
+  const y = first ? first.getBoundingClientRect().top + window.scrollY - (document.querySelector("header").offsetHeight + chipsEl.offsetHeight + 10) : 0;
   window.scrollTo({top: Math.max(0, y), behavior:"smooth"});
 });
 
